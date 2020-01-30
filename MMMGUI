@@ -1,0 +1,32 @@
+package meanMedianMode;
+
+import javax.swing.*;
+import BreezySwing.*;
+import java.util.ArrayList;
+
+@SuppressWarnings("serial")
+public class MMMGUI extends GBFrame {
+	private static JFrame frm = new MMMGUI();
+	private MMMServer server = new MMMServer();
+	private ArrayList<Integer> unsortedList = new ArrayList<Integer>();
+	private ArrayList<Integer> sortedList = new ArrayList<Integer>();
+	private JLabel addNumLabel = addLabel("Input a number:", 1,1,1,1);
+	private IntegerField inputNumField = addIntegerField(0, 1,2,1,1);
+	private JButton inputNumButton = addButton("Add Number", 2,1,1,1);
+	private JLabel outputInstructionsLabel = addLabel("Outputs:", 3,1,1,1);
+	private JButton meanButton = addButton("Find Mean", 4,1,1,1);
+	private JButton medianButton = addButton("Find Median", 5,1,1,1);
+	private JButton modeButton = addButton("Find Mode", 6,1,1,1);
+	private JButton exitButton = addButton("Exit", 7,1,1,1);
+	private JButton resetButton = addButton("Reset", 8,1,1,1);
+	
+	public void buttonClicked(JButton buttonObj) {
+		
+	}
+	
+	public static void main(String[] args) {
+		frm.setTitle("Mean Median Mode");
+		frm.setSize(400, 500);
+		frm.setVisible(true);
+	}
+}
