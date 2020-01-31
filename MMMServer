@@ -1,5 +1,23 @@
 package meanMedianMode;
 
 public class MMMServer {
-
+	public int calculateAverage(int[] unsortedList) {
+		int sum = 0;
+		for(int i = 0; i < unsortedList.length; i++) {
+			sum += unsortedList[i];
+		}
+		
+		return sum / unsortedList.length;
+	}
+	
+	public int calculateMedian(int[] unsortedList, int[] sortedList) {
+		sortedList = unsortedList;
+		for(int i = 1; i < sortedList.length; i++) {
+			if(i == 1) {
+				
+			}
+		}
+		
+		return 0;
+	}
 }
