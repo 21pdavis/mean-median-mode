@@ -4,23 +4,65 @@ import javax.swing.*;
 import BreezySwing.*;
 import java.util.ArrayList;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "unused"})
 public class MMMGUI extends GBFrame {
 	private static JFrame frm = new MMMGUI();
 	private MMMServer server = new MMMServer();
-	private ArrayList<Integer> unsortedList = new ArrayList<Integer>();
-	private ArrayList<Integer> sortedList = new ArrayList<Integer>();
-	private JLabel addNumLabel = addLabel("Input a number:", 1,1,1,1);
-	private IntegerField inputNumField = addIntegerField(0, 1,2,1,1);
+	private int count = 0;
+	private int[] unsortedList;
+	private int[] sortedList; // use this list to copy it over first, THEN do the sorting. sort within ONE array
+	private JLabel inputNumLabel = addLabel("Input Number Array:", 1,1,1,1);
+	private JTextField inputNumField = addTextField("", 1,2,1,1);
 	private JButton inputNumButton = addButton("Add Number", 2,1,1,1);
 	private JLabel outputInstructionsLabel = addLabel("Outputs:", 3,1,1,1);
 	private JButton meanButton = addButton("Find Mean", 4,1,1,1);
 	private JButton medianButton = addButton("Find Median", 5,1,1,1);
 	private JButton modeButton = addButton("Find Mode", 6,1,1,1);
-	private JButton exitButton = addButton("Exit", 7,1,1,1);
-	private JButton resetButton = addButton("Reset", 8,1,1,1);
+	private JButton standardDevButton = addButton("Standard Deviation", 7,1,1,1);
+	private JButton exitButton = addButton("Exit", 8,1,1,1);
+	private JButton resetButton = addButton("Reset", 9,1,1,1);
+	
+	public MMMGUI() {
+		meanButton.setEnabled(false);
+		medianButton.setEnabled(false);
+		modeButton.setEnabled(false);
+		standardDevButton.setEnabled(false);
+	}
 	
 	public void buttonClicked(JButton buttonObj) {
+		if(buttonObj == inputNumButton) {
+			System.out.println();
+			initArray();
+		}
+		if(buttonObj == meanButton) {
+			messageBox("Mean: " + server.calculateAverage(unsortedList));
+		}
+		if(buttonObj == medianButton) {
+			
+		}
+		if(buttonObj == modeButton) {
+			
+		}
+		if(buttonObj == standardDevButton) {
+			
+		}
+		if(buttonObj == exitButton) {
+			
+		}
+		if(buttonObj == resetButton) {
+			
+		}
+	}
+	
+	private void initArray() {
+		String[] temp = inputNumField.getText().split(",");
+		for(int i = 0; i < inputNumField.getText().length(); i++) {
+			System.out.println(temp[i]);
+		}
+	}
+	
+	private void resetFrame() {
+		inputNumField.setText("");
 		
 	}
 	
