@@ -9,10 +9,10 @@ public class MMMGUI extends GBFrame {
 	private static JFrame frm = new MMMGUI();
 	private MMMServer server = new MMMServer();
 	private int count = 0;
-	private int[] unsortedList;
-	private int[] sortedList; // use this list to copy it over first, THEN do the sorting. sort within ONE array
+	private int[] unsortedList = new int[25];
+	private int[] sortedList = new int[25]; // use this list to copy it over first, THEN do the sorting. sort within ONE array
 	private JLabel inputNumLabel = addLabel("Input Number Array:", 1,1,1,1);
-	private JTextField inputNumField = addTextField("", 1,2,1,1);
+	private IntegerField inputNumField = addIntegerField(0, 1,2,1,1);
 	private JButton inputNumButton = addButton("Add Number", 2,1,1,1);
 	private JLabel outputInstructionsLabel = addLabel("Outputs:", 3,1,1,1);
 	private JButton meanButton = addButton("Find Mean", 4,1,1,1);
@@ -31,14 +31,17 @@ public class MMMGUI extends GBFrame {
 	
 	public void buttonClicked(JButton buttonObj) {
 		if(buttonObj == inputNumButton) {
-			System.out.println();
-			initArray();
+			if(count == 0) {
+				enableButtons();
+			}
+			addNum(inputNumField.getNumber());
+			inputNumField.setNumber(0);
 		}
 		if(buttonObj == meanButton) {
-			messageBox("Mean: " + server.calculateAverage(unsortedList));
+			messageBox("Mean: " + server.calculateMean(unsortedList));
 		}
 		if(buttonObj == medianButton) {
-			
+			messageBox("Median(s): " + server.calculateMedian(unsortedList, sortedList, count));
 		}
 		if(buttonObj == modeButton) {
 			
@@ -54,16 +57,24 @@ public class MMMGUI extends GBFrame {
 		}
 	}
 	
-	private void initArray() {
-		String[] temp = inputNumField.getText().split(",");
-		for(int i = 0; i < inputNumField.getText().length(); i++) {
-			System.out.println(temp[i]);
-		}
+	private void addNum(int num) {
+		unsortedList[count] = num;
+		count++;
+	}
+	
+	private void enableButtons() {
+		meanButton.setEnabled(true);
+		medianButton.setEnabled(true);
+		modeButton.setEnabled(true);
+		standardDevButton.setEnabled(true);
 	}
 	
 	private void resetFrame() {
-		inputNumField.setText("");
-		
+		inputNumField.setNumber(0);
+		meanButton.setEnabled(false);
+		medianButton.setEnabled(false);
+		modeButton.setEnabled(false);
+		standardDevButton.setEnabled(false);
 	}
 	
 	public static void main(String[] args) {
