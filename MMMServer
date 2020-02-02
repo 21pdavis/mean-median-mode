@@ -1,23 +1,42 @@
 package meanMedianMode;
 
 public class MMMServer {
-	public int calculateAverage(int[] unsortedList) {
+	public int calculateMean(int[] unsortedList) {
 		int sum = 0;
-		for(int i = 0; i < unsortedList.length; i++) {
+		for (int i = 0; i < unsortedList.length; i++) {
 			sum += unsortedList[i];
 		}
-		
+
 		return sum / unsortedList.length;
 	}
-	
-	public int calculateMedian(int[] unsortedList, int[] sortedList) {
-		sortedList = unsortedList;
-		for(int i = 1; i < sortedList.length; i++) {
-			if(i == 1) {
-				
-			}
-		}
+
+	public String calculateMedian(int[] unsortedList, int[] sortedList, int count) {
+		String medianString = "";
+		sortedList = sortArray(unsortedList, count);
 		
-		return 0;
+		
+		if(count % 2 == 0) {
+			medianString += (sortedList[count / 2 - 1] + sortedList[count / 2]) / 2.0;
+		}
+		else {
+			medianString += sortedList[count / 2];
+		}
+
+		return medianString;
+	}
+	
+	private int[] sortArray(int[] listToBeSorted, int count) {
+		for (int i = 1; i < count; i++) {
+            int key = listToBeSorted[i];
+            int j = i-1;  
+            
+            while ( (j > -1) && ( listToBeSorted [j] > key ) ) 
+            {  
+            	listToBeSorted [j+1] = listToBeSorted [j];  
+                j--;  
+            }  
+            listToBeSorted[j+1] = key; 
+        }  
+		return listToBeSorted;
 	}
 }
