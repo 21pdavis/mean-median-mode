@@ -18,7 +18,6 @@ public class MMMGUI extends GBFrame {
 	private JButton meanButton = addButton("Find Mean", 4,1,1,1);
 	private JButton medianButton = addButton("Find Median", 5,1,1,1);
 	private JButton modeButton = addButton("Find Mode", 6,1,1,1);
-	private JButton standardDevButton = addButton("Standard Deviation", 7,1,1,1);
 	private JButton exitButton = addButton("Exit", 8,1,1,1);
 	private JButton resetButton = addButton("Reset", 9,1,1,1);
 	
@@ -26,7 +25,6 @@ public class MMMGUI extends GBFrame {
 		meanButton.setEnabled(false);
 		medianButton.setEnabled(false);
 		modeButton.setEnabled(false);
-		standardDevButton.setEnabled(false);
 	}
 	
 	public void buttonClicked(JButton buttonObj) {
@@ -41,32 +39,46 @@ public class MMMGUI extends GBFrame {
 			messageBox("Mean: " + server.calculateMean(unsortedList));
 		}
 		if(buttonObj == medianButton) {
-			messageBox("Median(s): " + server.calculateMedian(unsortedList, sortedList, count));
+			messageBox("Median(s): " + server.calculateMedian(sortedList, count));
 		}
 		if(buttonObj == modeButton) {
-			
-		}
-		if(buttonObj == standardDevButton) {
-			
+			messageBox("Mode(s): " + server.calculateMode(unsortedList, count));
 		}
 		if(buttonObj == exitButton) {
-			
+			System.exit(0);
 		}
 		if(buttonObj == resetButton) {
-			
+			for(int i = 0; i < count; i++)
+			{
+				unsortedList[i] = (Integer)null;
+				sortedList[i] = (Integer)null;
+			}
 		}
 	}
 	
 	private void addNum(int num) {
-		unsortedList[count] = num;
-		count++;
+		unsortedList[count++] = num;
+		sortedList = sortArray(unsortedList);
+	}
+	
+	private int[] sortArray(int[] listToBeSorted) {
+		for (int i = 1; i < count; i++){
+            int key = listToBeSorted[i];
+            int j = i-1;  
+            
+            while (j > -1 && listToBeSorted[j] > key) {
+            	listToBeSorted [j+1] = listToBeSorted [j];  
+                j--;  
+            }  
+            listToBeSorted[j+1] = key; 
+        }  
+		return listToBeSorted;
 	}
 	
 	private void enableButtons() {
 		meanButton.setEnabled(true);
 		medianButton.setEnabled(true);
 		modeButton.setEnabled(true);
-		standardDevButton.setEnabled(true);
 	}
 	
 	private void resetFrame() {
@@ -74,7 +86,6 @@ public class MMMGUI extends GBFrame {
 		meanButton.setEnabled(false);
 		medianButton.setEnabled(false);
 		modeButton.setEnabled(false);
-		standardDevButton.setEnabled(false);
 	}
 	
 	public static void main(String[] args) {
