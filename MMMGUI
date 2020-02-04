@@ -57,7 +57,12 @@ public class MMMGUI extends GBFrame {
 	}
 	
 	private void addNum(int num) {
-		unsortedList[count++] = num;
+		try{
+			unsortedList[count++] = num;
+		}
+		catch(ArrayOutOfBoundsException e){
+			messageBox("Input only up to 25 values" + e.getMessage());
+		}
 		sortedList = sortArray(unsortedList);
 	}
 	
