@@ -25,13 +25,16 @@ public class MMMServer {
 		return medianString;
 	}
 	
-	public String calculateMode(int[] unsortedList, int count) {
+	public int calculateStandardDeviation() {
+		
+		return 0;
+	}
+	
+	public String calculateMode(int[] unsortedList, int count) { // stupid mode >:(
 		String modeString = "";
-		int currentMax = 1, potentialMax = 0, modeCount = 0, existingCount = 1;
+		int currentMax = 1, potentialMax = 0, modeCount = 0;
 		ArrayList<Integer> modes = new ArrayList<Integer>();
-		
-		System.out.println(count);
-		
+				
 		for(int i = 0; i < count; i++) { // loop to find highest occuring number of any mode
 			potentialMax = 0;
 			for(int j = 0; j < count; j++) {	
@@ -43,19 +46,21 @@ public class MMMServer {
 				currentMax = potentialMax;
 		}
 		
-		for(int i = 0; i < count; i++) { // add modes to string
+		for(int i = 0; i < count; i++) { // add modes to list
 			modeCount = 0;
 			for(int j = 0; j < count; j++) {
 				if(unsortedList[j] == unsortedList[i]) {
 					modeCount++;
-					modes.add(unsortedList[i]);
+					if(modeCount == currentMax) {
+						modes.add(unsortedList[i]);
+					}
 				}
 			}
 		}
 		
-		for(int i = 0; i < modes.size(); i++) {
+		for(int i = 0; i < modes.size(); i++) { // remove repeat values
 			for(int j = i; j < modes.size(); j++) {
-				if(modes.get(j) == modes.get(i) && i != j) {
+				if(modes.get(j) == modes.get(i)) {
 					modes.remove(j);
 				}
 			}
