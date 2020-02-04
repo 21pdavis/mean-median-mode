@@ -1,5 +1,7 @@
 package meanMedianMode;
 
+import java.util.ArrayList;
+
 public class MMMServer {
 	public int calculateMean(int[] list) {
 		int sum = 0;
@@ -26,8 +28,8 @@ public class MMMServer {
 	public String calculateMode(int[] unsortedList, int count) {
 		String modeString = "";
 		int currentMax = 1, potentialMax = 0, modeCount = 0, existingCount = 1;
-		boolean isRepeat = false;
-		int[] modes = new int[25];
+		ArrayList<Integer> modes = new ArrayList<Integer>();
+		
 		System.out.println(count);
 		
 		for(int i = 0; i < count; i++) { // loop to find highest occuring number of any mode
@@ -35,7 +37,6 @@ public class MMMServer {
 			for(int j = 0; j < count; j++) {	
 				if(unsortedList[j] == unsortedList[i]) {
 					potentialMax++;
-					modes[i] = unsortedList[i];
 				}
 			}
 			if(potentialMax > currentMax) 
@@ -43,22 +44,25 @@ public class MMMServer {
 		}
 		
 		for(int i = 0; i < count; i++) { // add modes to string
-			isRepeat = false;
 			modeCount = 0;
 			for(int j = 0; j < count; j++) {
 				if(unsortedList[j] == unsortedList[i]) {
 					modeCount++;
+					modes.add(unsortedList[i]);
 				}
 			}
-			for(int h = 0; h < modeCount; h++){
-				if(unsortedList[i] == modes[h]){
-					isRepeat = true;
+		}
+		
+		for(int i = 0; i < modes.size(); i++) {
+			for(int j = i; j < modes.size(); j++) {
+				if(modes.get(j) == modes.get(i) && i != j) {
+					modes.remove(j);
 				}
 			}
-			if(modeCount == currentMax && isRepeat == false) {
-				modeString += unsortedList[i] + " ";
-				modes[i] = unsortedList[i];
-			}
+		}
+		
+		for(int i = 0; i < modes.size(); i++) {
+			modeString += modes.get(i) + " ";
 		}
 		
 		return modeString;
