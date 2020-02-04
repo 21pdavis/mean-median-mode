@@ -25,22 +25,24 @@ public class MMMServer {
 	
 	public String calculateMode(int[] unsortedList, int count) {
 		String modeString = "";
-		int currentMax = 1, potentialMax = 0, modeCount = 0, existingCount = 0;
+		int currentMax = 1, potentialMax = 0, modeCount = 0, existingCount = 1;
 		boolean isRepeat = false;
-		int[] existingNumbers = new int[25];
+		int[] modes = new int[25];
 		System.out.println(count);
 		
-		for(int i = 0; i < count; i++) {
+		for(int i = 0; i < count; i++) { // loop to find highest occuring number of any mode
 			potentialMax = 0;
 			for(int j = 0; j < count; j++) {	
-				if(unsortedList[j] == unsortedList[i])
+				if(unsortedList[j] == unsortedList[i]) {
 					potentialMax++;
+					modes[i] = unsortedList[i];
+				}
 			}
 			if(potentialMax > currentMax) 
 				currentMax = potentialMax;
 		}
 		
-		for(int i = 0; i < count; i++) {
+		for(int i = 0; i < count; i++) { // add modes to string
 			isRepeat = false;
 			modeCount = 0;
 			for(int j = 0; j < count; j++) {
@@ -48,14 +50,14 @@ public class MMMServer {
 					modeCount++;
 				}
 			}
-			for(int h = 0; h < existingCount; h++){
-				if(unsortedList[i] == existingNumbers[h]){
-					isRepeat == true;
+			for(int h = 0; h < modeCount; h++){
+				if(unsortedList[i] == modes[h]){
+					isRepeat = true;
 				}
 			}
 			if(modeCount == currentMax && isRepeat == false) {
 				modeString += unsortedList[i] + " ";
-				existingNumbers[i] = unsortedList[i];
+				modes[i] = unsortedList[i];
 			}
 		}
 		
