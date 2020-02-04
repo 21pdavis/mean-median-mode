@@ -11,13 +11,15 @@ public class MMMGUI extends GBFrame {
 	private int count = 0;
 	private int[] unsortedList = new int[25];
 	private int[] sortedList = new int[25]; // use this list to copy it over first, THEN do the sorting. sort within ONE array
+	private String[] inputArray;
 	private JLabel inputNumLabel = addLabel("Input Number Array:", 1,1,1,1);
-	private IntegerField inputNumField = addIntegerField(0, 1,2,1,1);
-	private JButton inputNumButton = addButton("Add Number", 2,1,1,1);
+	private JTextField inputTextField = addTextField("", 1,2,1,1);
+	private JButton inputArrayButton = addButton("Input Numbers", 2,1,1,1);
 	private JLabel outputInstructionsLabel = addLabel("Outputs:", 3,1,1,1);
 	private JButton meanButton = addButton("Find Mean", 4,1,1,1);
 	private JButton medianButton = addButton("Find Median", 5,1,1,1);
 	private JButton modeButton = addButton("Find Mode", 6,1,1,1);
+	private JButton standardDevButton = addButton("Standard Deviation", 7,1,1,1);
 	private JButton exitButton = addButton("Exit", 8,1,1,1);
 	private JButton resetButton = addButton("Reset", 9,1,1,1);
 	
@@ -25,15 +27,12 @@ public class MMMGUI extends GBFrame {
 		meanButton.setEnabled(false);
 		medianButton.setEnabled(false);
 		modeButton.setEnabled(false);
+		standardDevButton.setEnabled(false);
 	}
 	
 	public void buttonClicked(JButton buttonObj) {
-		if(buttonObj == inputNumButton) {
-			if(count == 0) {
-				enableButtons();
-			}
-			addNum(inputNumField.getNumber());
-			inputNumField.setNumber(0);
+		if(buttonObj == inputArrayButton) {
+			initArrays();
 		}
 		if(buttonObj == meanButton) {
 			messageBox("Mean: " + server.calculateMean(unsortedList));
@@ -43,6 +42,9 @@ public class MMMGUI extends GBFrame {
 		}
 		if(buttonObj == modeButton) {
 			messageBox("Mode(s): " + server.calculateMode(unsortedList, count));
+		}
+		if(buttonObj == standardDevButton) {
+			messageBox("Standard Deviation: " + server.calculateStandardDeviation());
 		}
 		if(buttonObj == exitButton) {
 			System.exit(0);
@@ -56,12 +58,18 @@ public class MMMGUI extends GBFrame {
 		}
 	}
 	
-	private void addNum(int num) {
-		try{
-			unsortedList[count++] = num;
-		}
-		catch(ArrayOutOfBoundsException e){
-			messageBox("Input only up to 25 values" + e.getMessage());
+	private void initArrays() {
+		enableButtons();
+		inputArray = inputTextField.getText().split(",");
+		count = inputArray.length;
+		for(int i = 0; i < inputArray.length; i++) {
+			try {
+				inputArray[i] = inputArray[i].trim();
+				unsortedList[i] = Integer.parseInt(inputArray[i]);
+			}
+			catch(ArrayIndexOutOfBoundsException e) {
+				messageBox("Input only up to 25 numbers" + '\n' + "Message: " + e.getMessage());
+			}
 		}
 		sortedList = sortArray(unsortedList);
 	}
@@ -87,7 +95,7 @@ public class MMMGUI extends GBFrame {
 	}
 	
 	private void resetFrame() {
-		inputNumField.setNumber(0);
+		inputTextField.setText("");
 		meanButton.setEnabled(false);
 		medianButton.setEnabled(false);
 		modeButton.setEnabled(false);
